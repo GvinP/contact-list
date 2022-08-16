@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { FormDataType } from "../components/Login/Login";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://contact-list-server-test.herokuapp.com/",
 });
 
 instance.interceptors.request.use((req) => {
