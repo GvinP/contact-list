@@ -8,8 +8,9 @@ import Button from "@material-ui/core/Button";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input";
-import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/store";
+import { login, registration } from "../../store/authReducer";
 
 const initialState = {
   firstName: "",
@@ -26,19 +27,22 @@ export const Login = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const classes = useStyles();
   const [isSignUp, setIsSignUp] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSignUp) {
-      // dispatch(registrationTC(formData, navigate))
+      dispatch(registration({ formData, navigate }));
     } else {
-      // dispatch(loginTC(formData, navigate))
+      dispatch(login({ formData, navigate }));
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -83,7 +87,9 @@ export const Login = () => {
               label={"Password"}
               handleChange={handleChange}
               type={showPassword ? "text" : "password"}
-              handlerShowPassword={()=>setShowPassword((prevState) => !prevState)}
+              handlerShowPassword={() =>
+                setShowPassword((prevState) => !prevState)
+              }
             />
             {isSignUp && (
               <Input
@@ -91,7 +97,9 @@ export const Login = () => {
                 label={"Confirm Password"}
                 handleChange={handleChange}
                 type={showConfirmPassword ? "text" : "password"}
-                handlerShowPassword={()=>setShowConfirmPassword((prevState) => !prevState)}
+                handlerShowPassword={() =>
+                  setShowConfirmPassword((prevState) => !prevState)
+                }
               />
             )}
           </Grid>
