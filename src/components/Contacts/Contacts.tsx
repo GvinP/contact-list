@@ -13,8 +13,6 @@ export const Contacts = ({ setCurrentId }: PostsPropsType) => {
   const contacts = useAppSelector((state) => state.contacts.allContacts);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
 
-  if (!contacts.length && !isLoading) return <div>'No posts'</div>;
-
   return isLoading ? (
     <CircularProgress />
   ) : (
